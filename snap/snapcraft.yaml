@@ -4,9 +4,6 @@ summary: Community made themes for Typora markdown editor
 description: |
   Content snap providing community made themes to Typora snap.
 
-      snap install typora-community
-      snap connect typora:themes typora-community:themes
-
 adopt-info: version
 base: core18
 grade: stable
