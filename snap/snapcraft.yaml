@@ -1,0 +1,66 @@
+# https://snapcraft.io/docs/snapcraft-yaml-reference
+name: typora-community
+summary: Community made themes for Typora markdown editor
+description: |
+  Content snap providing community made themes to Typora snap.
+
+      snap install typora-community
+      snap connect typora:themes typora-community:themes
+
+adopt-info: version
+base: core18
+grade: stable
+confinement: strict
+architectures: 
+  - build-on: amd64
+
+slots:
+  themes:
+    interface: content
+    read: 
+      - $SNAP/themes
+
+parts:
+  version:
+    plugin: nil
+    override-build: |
+      # Use latest updated theme date for version number
+      for repo in $SNAPCRAFT_PART_BUILD/../../*/build/.git; do
+        current=`git --git-dir="$repo" log -1 --pretty=format:%ct`
+        if [ -z "$latest" ] || [ "$current" -gt "$latest" ]; then
+          latest="$current"
+        fi
+      done
+      snapcraftctl set-version `date --date=@"$latest" +%y.%m.%d`
+
+  ash:
+    source: https://github.com/typora/typora-ash-theme.git
+    source-depth: 1
+    plugin: dump
+    override-build: cp --recursive ash* $SNAPCRAFT_PART_INSTALL/
+    organize:
+      ash*: themes/
+
+  monospace:
+    source: https://github.com/typora/typora-monospace-theme.git
+    source-depth: 1
+    plugin: dump
+    override-build: cp --recursive monospace* $SNAPCRAFT_PART_INSTALL/
+    organize:
+      monospace*: themes/
+
+  lostkeys:
+    source: https://github.com/typora/typora-lostkeys-theme.git
+    source-depth: 1
+    plugin: dump
+    override-build: cp --recursive theme/lostkeys* $SNAPCRAFT_PART_INSTALL/
+    organize:
+      lostkeys*: themes/
+
+  saffron:
+    source: https://github.com/akash-panigrahi/typora-saffron-theme.git
+    source-depth: 1
+    plugin: dump
+    override-build: cp --recursive saffron* $SNAPCRAFT_PART_INSTALL/
+    organize:
+      saffron*: themes/
