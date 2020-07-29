@@ -1,6 +1,6 @@
 # https://snapcraft.io/docs/snapcraft-yaml-reference
 name: typora-community
-summary: Community made themes for Typora markdown editor snap
+summary: Community made themes for Typora markdown editor
 description: |
   - [Ash](https://github.com/typora/typora-ash-theme)
   - [Monospace](https://github.com/typora/typora-monospace-theme)
